@@ -53,7 +53,7 @@ class HomeState extends State<HomeScreen> {
       case GameState.playing:
         return playingScreen(context);
       case GameState.over:
-        return GameOverScreeen(context, 1);
+        return GameOverScreeen(context);
       case GameState.result:
         return playingScreen(context);
     }
@@ -81,7 +81,7 @@ class HomeState extends State<HomeScreen> {
   }
 
   void cheat_display() {
-    const Text("hello world");
+    Text("Flutter Postion is ${model.flutter_card_pos}");
   }
 
   Widget playingScreen(BuildContext context) {
@@ -99,7 +99,7 @@ class HomeState extends State<HomeScreen> {
                 }),
           ],
         ),
-        if (setSwitch) const Text("data"),
+        if (setSwitch) Text("Flutter Postion is ${model.flutter_card_pos}"),
         const SizedBox(
           height: 20,
         ),
@@ -178,16 +178,53 @@ class HomeState extends State<HomeScreen> {
     );
   }
 
-  Widget GameOverScreeen(BuildContext context, int i) {
+  Widget GameOverScreeen(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-            width: MediaQuery.of(context).size.width / 4,
-            height: MediaQuery.of(context).size.width / 4,
-            child: OutlinedButton(
-              onPressed: () {},
-              child: images[model.board[i].card],
-            )),
+        Text(
+          "You are Broke",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Center(
+          child: FilledButton(
+            onPressed: con.onPressedPlayAgain,
+            child: const Text("Play Again"),
+          ),
+        ),
+        Row(
+          children: [
+            const Text("cheat key"),
+            Switch(
+                value: setSwitch,
+                onChanged: (value) {
+                  callSetState(() {
+                    setSwitch = value;
+                  });
+                }),
+          ],
+        ),
+        if (setSwitch) const Text("data"),
+        const SizedBox(
+          height: 20,
+        ),
+        Text("Balance: ${model.balance}"),
+        const SizedBox(
+          height: 40,
+        ),
+        Center(
+          child: Row(
+            children: [
+              for (int i = 0; i < 3; i++) gamecard(context, i),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        ElevatedButton(
+          onPressed: con.onPressedPlay,
+          child: const Text("play"),
+        ),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 enum Cards{flutterCard, unturendCard, emptyCard,}
-enum GameState{init, playing, over,result}
+enum GameState{init, playing, over, result}
 
 bool frozeen = false;
 
@@ -12,13 +12,13 @@ class boards{
 }
 
 Random random = Random();
-late int flutter_card_pos;
 
 class GameModel{
   int balance = 15;
 
   GameState state = GameState.init;
   late final List<boards> board;
+  late int flutter_card_pos;
 
   GameModel(){
     board = List.generate(3, (index) => boards(card_bet: 0, card: Cards.unturendCard));
@@ -37,11 +37,22 @@ class GameModel{
 
   void play(){
     frozeen = false;
+    balance = board[flutter_card_pos].card_bet*3;
     for(int i = 0 ; i < 3; i++){
       board[i].card_bet = 0;
       board[i].card =Cards.emptyCard;
     }
     board[flutter_card_pos].card = Cards.flutterCard;
-    state = GameState.result;
+    if(balance > 0) {
+      state = GameState.result;
+    }
+    else{
+      state = GameState.over;
+    }
+  }
+
+  void Again(){
+    start();
+    balance = 15;
   }
 }
