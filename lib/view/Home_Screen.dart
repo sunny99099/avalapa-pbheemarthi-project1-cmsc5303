@@ -1,4 +1,4 @@
-import 'package:avalapa_pbheemarthi_project1_cmsc530/controller/Game_controller.dart';
+import 'package:avalapa_pbheemarthi_project1_cmsc530/controller/game_controller.dart';
 import 'package:avalapa_pbheemarthi_project1_cmsc530/model/game_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +17,9 @@ class HomeState extends State<HomeScreen> {
   late GameModel model;
   late GameController con;
   bool setSwitch = false;
-  
+
   Map<Cards, Widget> images = {
-    Cards.emptyCard: Image.asset("images/empty_card.png"),
+    Cards.emptyCard: Image.asset("images/empty_card.jpg"),
     Cards.flutterCard: Image.asset("images/flutter_card.png"),
     Cards.unturendCard: Image.asset("images/Unturned.png"),
   };
@@ -28,8 +28,8 @@ class HomeState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    con = GameController(this);
     model = GameModel();
+    con = GameController(this);
   }
 
   @override
@@ -54,6 +54,8 @@ class HomeState extends State<HomeScreen> {
         return playingScreen(context);
       case GameState.over:
         return GameOverScreeen(context, 1);
+      case GameState.result:
+        return playingScreen(context);
     }
   }
 
@@ -77,23 +79,34 @@ class HomeState extends State<HomeScreen> {
       ),
     );
   }
-  void cheat_display(){
+
+  void cheat_display() {
     const Text("hello world");
   }
+
   Widget playingScreen(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
             const Text("cheat key"),
-            Switch(value: setSwitch, onChanged:(value){callSetState((){setSwitch = value;});} ),
-            
+            Switch(
+                value: setSwitch,
+                onChanged: (value) {
+                  callSetState(() {
+                    setSwitch = value;
+                  });
+                }),
           ],
         ),
-        if(setSwitch) const Text("data"),
-        const SizedBox(height: 20,),
+        if (setSwitch) const Text("data"),
+        const SizedBox(
+          height: 20,
+        ),
         Text("Balance: ${model.balance}"),
-        const SizedBox(height: 40,),
+        const SizedBox(
+          height: 40,
+        ),
         Center(
           child: Row(
             children: [
@@ -101,8 +114,13 @@ class HomeState extends State<HomeScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 40,),
-        ElevatedButton(onPressed: (){}, child: const Text("play")),
+        const SizedBox(
+          height: 40,
+        ),
+        ElevatedButton(
+          onPressed: con.onPressedPlay,
+          child: const Text("play"),
+        ),
       ],
     );
   }
@@ -128,26 +146,30 @@ class HomeState extends State<HomeScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(1.0),
-                child: images[
-                    model.board[i].card],
+                child: images[model.board[i].card],
               ),
             ),
           ),
-            const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           Container(
             color: Colors.lightBlue[200],
             child: Row(
               children: [
                 IconButton(
-                      onPressed: (){con.onPressedDownArrow(i);},
-                      icon: const Icon(Icons.arrow_downward),
-                    ),
+                  onPressed: () {
+                    con.onPressedDownArrow(i);
+                  },
+                  icon: const Icon(Icons.arrow_downward),
+                ),
                 Text("${model.board[i].card_bet}"),
                 IconButton(
-                      onPressed: (){con.onPressedUpArrow(i);},
-                      icon: const Icon(Icons.arrow_upward),
-                    ),
-            
+                  onPressed: () {
+                    con.onPressedUpArrow(i);
+                  },
+                  icon: const Icon(Icons.arrow_upward),
+                ),
               ],
             ),
           ),
