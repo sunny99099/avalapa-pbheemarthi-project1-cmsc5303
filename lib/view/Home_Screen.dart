@@ -85,43 +85,66 @@ class HomeState extends State<HomeScreen> {
   }
 
   Widget playingScreen(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const Text("cheat key"),
-            Switch(
-                value: setSwitch,
-                onChanged: (value) {
-                  callSetState(() {
-                    setSwitch = value;
-                  });
-                }),
-          ],
-        ),
-        if (setSwitch) Text("Flutter Postion is ${model.flutter_card_pos}"),
-        const SizedBox(
-          height: 20,
-        ),
-        Text("Balance: ${model.balance}"),
-        const SizedBox(
-          height: 40,
-        ),
-        Center(
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
             children: [
-              for (int i = 0; i < 3; i++) gamecard(context, i),
+              const Text("cheat key"),
+              Switch(
+                  value: setSwitch,
+                  onChanged: (value) {
+                    callSetState(() {
+                      setSwitch = value;
+                    });
+                  }),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        ElevatedButton(
-          onPressed: con.onPressedPlay,
-          child: const Text("play"),
-        ),
-      ],
+          if (setSwitch)
+            Text(
+              "SECRET: (Flutter is at card ${model.flutter_card_pos})",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text("Balance: ${model.balance}"),
+          const SizedBox(
+            height: 40,
+          ),
+          Center(
+            child: Row(
+              children: [
+                for (int i = 0; i < 3; i++) gamecard(context, i),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          ElevatedButton(
+            onPressed: con.onPressedPlay,
+            style: ButtonStyle(
+              backgroundColor: con.On_off()
+                  ? WidgetStateProperty.all<Color>(Colors.lightBlue[100]!)
+                  : WidgetStateProperty.all<Color>(
+                      Colors.lightBlue[50]!), // Set button background color
+            ),
+            child: const Text("play"),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          if (con.gain_result)
+            Container(
+                color: Colors.green[100],
+                child: Text(
+                  "You won: ${model.bet}(on Key) X 3 = ${model.gain} coin(s)\nPress <NEW> for another round",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )),
+        ],
+      ),
     );
   }
 
@@ -133,7 +156,7 @@ class HomeState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width / 3.1,
+            width: MediaQuery.of(context).size.width / 3.2,
             height: MediaQuery.of(context).size.width / 2,
             child: OutlinedButton(
               onPressed: () {},
@@ -161,14 +184,20 @@ class HomeState extends State<HomeScreen> {
                   onPressed: () {
                     con.onPressedDownArrow(i);
                   },
-                  icon: const Icon(Icons.arrow_downward),
+                  icon: Icon(
+                    Icons.remove,
+                    color: con.down_on(i) ? Colors.black : Colors.white,
+                  ),
                 ),
                 Text("${model.board[i].card_bet}"),
                 IconButton(
                   onPressed: () {
                     con.onPressedUpArrow(i);
                   },
-                  icon: const Icon(Icons.arrow_upward),
+                  icon: Icon(
+                    Icons.add,
+                    color: con.up_on() ? Colors.black : Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -178,54 +207,63 @@ class HomeState extends State<HomeScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget GameOverScreeen(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "You are Broke",
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        Center(
-          child: FilledButton(
-            onPressed: con.onPressedPlayAgain,
-            child: const Text("Play Again"),
+    return Container(
+      color: Colors.red[200],
+      child: Column(
+        children: [
+          Text(
+            "You are Broke",
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
-        ),
-        Row(
-          children: [
-            const Text("cheat key"),
-            Switch(
-                value: setSwitch,
-                onChanged: (value) {
-                  callSetState(() {
-                    setSwitch = value;
-                  });
-                }),
-          ],
-        ),
-        if (setSwitch) const Text("data"),
-        const SizedBox(
-          height: 20,
-        ),
-        Text("Balance: ${model.balance}"),
-        const SizedBox(
-          height: 40,
-        ),
-        Center(
-          child: Row(
+
+          const SizedBox(height: 20,),
+          Center(
+            child: FilledButton(
+              onPressed: con.onPressedPlayAgain,
+              child: const Text("Play Again"),
+            ),
+          ),
+          Row(
             children: [
-              for (int i = 0; i < 3; i++) gamecard(context, i),
+              const Text("cheat key"),
+              Switch(
+                  value: setSwitch,
+                  onChanged: (value) {
+                    callSetState(() {
+                      setSwitch = value;
+                    });
+                  }),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        ElevatedButton(
-          onPressed: con.onPressedPlay,
-          child: const Text("play"),
-        ),
-      ],
+          if (setSwitch) Text(
+              "SECRET: (Flutter is at card ${model.flutter_card_pos})",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text("Balance: ${model.balance}"),
+          const SizedBox(
+            height: 40,
+          ),
+          Center(
+            child: Row(
+              children: [
+                for (int i = 0; i < 3; i++) gamecard(context, i),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          ElevatedButton(
+            onPressed: con.onPressedPlay,
+            child: const Text("play"),
+          ),
+        ],
+      ),
     );
   }
 }
