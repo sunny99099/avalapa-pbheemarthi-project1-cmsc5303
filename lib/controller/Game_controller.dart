@@ -7,8 +7,10 @@ class GameController{
 
   void onPressedNewGame(){
     state.callSetState((){
+      if(state.model.pause) {
         gain_result = false;
         state.model.start();
+      }
     });
   }
 

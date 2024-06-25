@@ -36,6 +36,7 @@ class GameModel{
   }
   int bet = 0;
   int gain =0;
+  bool pause = true;
   void play(){
     frozeen = false;
     if(board[flutter_card_pos].card_bet > 0 ) {
@@ -52,6 +53,7 @@ class GameModel{
       state = GameState.result;
     }
     else{
+      pause = false;
       state = GameState.over;
     }
   }
