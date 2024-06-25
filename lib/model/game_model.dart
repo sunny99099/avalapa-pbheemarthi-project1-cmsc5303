@@ -19,10 +19,18 @@ class GameModel{
   GameState state = GameState.init;
   late final List<boards> board;
   late int flutter_card_pos;
+  int bet = 0;
+  int gain =0;
+  bool pause = true;
 
   GameModel(){
     board = List.generate(3, (index) => boards(card_bet: 0, card: Cards.unturendCard));
+    for(int i = 0; i < 3; i++){
+      board[i].card_bet = 0;
+      board[i].card =Cards.unturendCard;
+    }
   }
+  
 
   void start(){
     frozeen  = true;
@@ -34,9 +42,7 @@ class GameModel{
     }
 
   }
-  int bet = 0;
-  int gain =0;
-  bool pause = true;
+  
   void play(){
     frozeen = false;
     if(board[flutter_card_pos].card_bet > 0 ) {

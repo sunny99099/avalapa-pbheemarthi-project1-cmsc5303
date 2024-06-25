@@ -8,8 +8,11 @@ class GameController{
   void onPressedNewGame(){
     state.callSetState((){
       if(state.model.pause) {
-        gain_result = false;
-        state.model.start();
+        if(!On_off()) {
+          gain_result = false;
+          state.model.start();
+        }
+        
       }
     });
   }
@@ -22,6 +25,7 @@ class GameController{
     state.callSetState((){
       if(On_off()) {
         if(state.model.frozeen) {
+          
           gain_result = true;
           state.model.play();
         }

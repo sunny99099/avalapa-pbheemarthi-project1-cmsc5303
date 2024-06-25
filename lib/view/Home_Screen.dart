@@ -68,11 +68,11 @@ class HomeState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Welcome to Find the Flutter Game",
+            "Where is Flutter Game!",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(
-            "Press <new> for new game",
+            "Press <NEW> to play",
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ],
@@ -91,7 +91,7 @@ class HomeState extends State<HomeScreen> {
         children: [
           Row(
             children: [
-              const Text("cheat key"),
+              const Text("Cheat key"),
               Switch(
                   value: setSwitch,
                   onChanged: (value) {
@@ -103,13 +103,13 @@ class HomeState extends State<HomeScreen> {
           ),
           if (setSwitch)
             Text(
-              "SECRET: (Flutter is at card ${model.flutter_card_pos})",
+              "SECRET: (The Flutter is at Card-${model.flutter_card_pos})",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           const SizedBox(
             height: 20,
           ),
-          Text("Balance: ${model.balance}"),
+          Text("Balance: ${model.balance} coins"),
           const SizedBox(
             height: 40,
           ),
@@ -131,7 +131,7 @@ class HomeState extends State<HomeScreen> {
                   : WidgetStateProperty.all<Color>(
                       Colors.lightBlue[50]!), // Set button background color
             ),
-            child: const Text("play"),
+            child: const Text("Play"),
           ),
           const SizedBox(
             height: 40,
@@ -214,7 +214,7 @@ class HomeState extends State<HomeScreen> {
       child: Column(
         children: [
           Text(
-            "You are Broke",
+            "You are broke!",
             style: Theme.of(context).textTheme.headlineLarge,
           ),
 
@@ -222,12 +222,12 @@ class HomeState extends State<HomeScreen> {
           Center(
             child: FilledButton(
               onPressed: con.onPressedPlayAgain,
-              child: const Text("Play Again"),
+              child: const Text("Rstart"),
             ),
           ),
           Row(
             children: [
-              const Text("cheat key"),
+              const Text("Cheat key"),
               Switch(
                   value: setSwitch,
                   onChanged: (value) {
@@ -238,7 +238,7 @@ class HomeState extends State<HomeScreen> {
             ],
           ),
           if (setSwitch) Text(
-              "SECRET: (Flutter is at card ${model.flutter_card_pos})",
+              "SECRET: (The Flutter is at Card-${model.flutter_card_pos})",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           const SizedBox(
@@ -260,7 +260,7 @@ class HomeState extends State<HomeScreen> {
           ),
           ElevatedButton(
             onPressed: con.onPressedPlay,
-            child: const Text("play"),
+            child: const Text("Play"),
           ),
         ],
       ),
