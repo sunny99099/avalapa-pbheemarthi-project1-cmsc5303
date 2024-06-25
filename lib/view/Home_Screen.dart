@@ -222,7 +222,7 @@ class HomeState extends State<HomeScreen> {
           Center(
             child: FilledButton(
               onPressed: con.onPressedPlayAgain,
-              child: const Text("Rstart"),
+              child: const Text("Restart"),
             ),
           ),
           Row(
