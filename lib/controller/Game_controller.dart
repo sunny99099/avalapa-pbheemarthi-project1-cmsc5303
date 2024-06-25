@@ -60,6 +60,7 @@ class GameController{
   void onPressedPlayAgain(){
     state.callSetState((){
       state.model.Again();
+      gain_result = false;
     });
   }
 
