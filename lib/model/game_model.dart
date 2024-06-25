@@ -19,8 +19,8 @@ class GameModel{
   GameState state = GameState.init;
   late final List<boards> board;
   late int flutter_card_pos;
-  int bet = 0;
-  int gain =0;
+  late int bet;
+  late int gain;
   bool pause = true;
 
   GameModel(){
@@ -45,6 +45,8 @@ class GameModel{
   
   void play(){
     frozeen = false;
+    gain = 0;
+    bet =0;
     if(board[flutter_card_pos].card_bet > 0 ) {
       bet = board[flutter_card_pos].card_bet;
       gain = bet*3;
